@@ -1,6 +1,5 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
-// #include <M5StickC.h>
 #include <ArduinoJson.h>
 #include <M5Stack.h>
 
@@ -32,6 +31,8 @@ void setup() {
 }
 
 void loop() {
+  M5.Lcd.fillCircle(200, 200, 40, GREEN); //Display a circle to show the power is ON.
+
   if (!mqttClient.connected()) {
     reconnect();
   }
@@ -96,9 +97,8 @@ void displayRainyMessage() {
     M5.Lcd.setCursor(30, 30);
     M5.Speaker.tone(440, 200);
     M5.Lcd.print("It's rainy!\n\n Umbrella!");
-    M5.Lcd.fillCircle(200, 200, 40, GREEN);
     delay(1000);
     M5.Speaker.mute();
-    delay(2000);
+    delay(10000);
     M5.Lcd.clear();
 }
