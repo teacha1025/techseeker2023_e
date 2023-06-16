@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 
+#まず、天気を取得するコード
 def main(url):
     # bs4でパース
     s = soup(url)
@@ -49,6 +50,7 @@ def forecast2dict(soup):
 
 ################################################################################
 ################################################################################
+#以下、mqtt関連コード
 # MQTTブローカーの接続情報
 broker_address = "mqtt.eclipseprojects.io"
 broker_port = 1883
@@ -72,7 +74,7 @@ def on_message(client, userdata, msg):
         # user_input = input("Enter a message: ")　試験的にキーボード入力で検証した
         URL = 'https://tenki.jp/forecast/6/30/6200/27127/'
         # main(URL) returns ["雨 in 天気予報の情報"]
-        if main(URL):
+        if "雨" in main(URL):
             client.publish(mqtt_topic_weather, "rain")
             print("Published [topic/weather] rain")
 
